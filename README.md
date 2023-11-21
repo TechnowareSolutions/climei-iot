@@ -18,9 +18,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, nisl quis t
 
 ## :computer: Esquemas Eletrônicos
 <img src="Esquemas/GS2_bb.png"/>
-<small>Esquema visual dos componentes e ligações</small>
-<br/>
-<br/>
-
 <img src="Esquemas/GS2_Esquemático.png"/>
-<small>Esquema de ligação do sensor de temperatura e umidade DHT11 com o ESP8266</small>
