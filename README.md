@@ -19,7 +19,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, nisl quis t
 ## :computer: Esquemas Eletrônicos
 <img src="Esquemas/GS2_bb.png"/>
 <small>Esquema visual dos componentes e ligações</small>
-
+<br/>
 <br/>
 
 <img src="Esquemas/GS2_Esquemático.png"/>
