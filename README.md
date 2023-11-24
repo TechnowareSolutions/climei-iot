@@ -6,10 +6,16 @@ A tecnologia por trás do Climei é impulsionada por sensores de Internet das Co
 ## :file_folder: Conteúdo
 - [:thermometer: #Climei](#thermometer-climei)
   - [:file\_folder: Conteúdo](#file_folder-conteúdo)
-  - [:books: Bibliotecas necessárias](#books-bibliotecas-necessárias)
+  - [:books: Bibliotecas necessárias (Node-RED)](#books-bibliotecas-necessárias-node-red)
+  - [:books: Bibliotecas necessárias (ESP8266)](#books-bibliotecas-necessárias-esp8266)
   - [:computer: Esquemas Eletrônicos](#computer-esquemas-eletrônicos)
 
-## :books: Bibliotecas necessárias
+## :books: Bibliotecas necessárias (Node-RED)
+- [node-red](https://flows.nodered.org/node/node-red)
+- [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
+- [node-red-contrib-moment](https://flows.nodered.org/node/node-red-contrib-moment)
+
+## :books: Bibliotecas necessárias (ESP8266)
 
 - [ArduinoJson](https://arduinojson.org/)
 - [DHTesp](#)

@@ -1,0 +1,619 @@
+[
+    {
+        "id": "c216bda75a6807fc",
+        "type": "tab",
+        "label": "GS2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3cb202ecb9c9ade0",
+        "type": "group",
+        "z": "c216bda75a6807fc",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "91720703dd36fa2d",
+            "5b5783bd4a6c0dc8"
+        ],
+        "x": 174,
+        "y": 679,
+        "w": 372,
+        "h": 82
+    },
+    {
+        "id": "012d858223d433cd",
+        "type": "mqtt in",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "topic": "fiap/iot/turma/2tdspg/grupo/technoware/devtype/esp8266/devid/esp001/sensor/dht11/umidade",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "2168c626ac5e81f7",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 440,
+        "y": 420,
+        "wires": [
+            [
+                "27d5075d4165a1c1",
+                "326d74cdbe537c5c"
+            ]
+        ]
+    },
+    {
+        "id": "1d5c2bab3f17775d",
+        "type": "mqtt in",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "topic": "fiap/iot/turma/2tdspg/grupo/technoware/devtype/esp8266/devid/esp001/sensor/dht11/temperatura",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "2168c626ac5e81f7",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 430,
+        "y": 340,
+        "wires": [
+            [
+                "19ab1b55170e0bae",
+                "7d77741a32d222ff"
+            ]
+        ]
+    },
+    {
+        "id": "4d27219362865b83",
+        "type": "mqtt in",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "topic": "fiap/iot/turma/2tdspg/grupo/technoware/devtype/esp8266/devid/esp001/sensor/pulsesensor/bpm",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "2168c626ac5e81f7",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 430,
+        "y": 520,
+        "wires": [
+            [
+                "ee514ee8b7312866",
+                "dafdef2bad08c2a5"
+            ]
+        ]
+    },
+    {
+        "id": "19ab1b55170e0bae",
+        "type": "ui_gauge",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "group": "3f482cdd147cf361",
+        "order": 2,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Temperatura",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value}}",
+        "min": "-40",
+        "max": "80",
+        "colors": [
+            "#00b3b0",
+            "#32e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 870,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "27d5075d4165a1c1",
+        "type": "ui_gauge",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "group": "3f482cdd147cf361",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Umidade",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#dfac20",
+            "#00e62e",
+            "#dfac20"
+        ],
+        "seg1": "50",
+        "seg2": "60",
+        "diff": false,
+        "className": "",
+        "x": 860,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "ee514ee8b7312866",
+        "type": "ui_gauge",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "group": "3f482cdd147cf361",
+        "order": 1,
+        "width": "12",
+        "height": 4,
+        "gtype": "gage",
+        "title": "Batimentos Cardiacos",
+        "label": "{{msg.payload.unit}}",
+        "format": "{{msg.payload.value}}",
+        "min": "0",
+        "max": "200",
+        "colors": [
+            "#dfac20",
+            "#00e62e",
+            "#dfac20"
+        ],
+        "seg1": "50",
+        "seg2": "60",
+        "diff": false,
+        "className": "",
+        "x": 900,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "fa5bdf9d64f06a5d",
+        "type": "function",
+        "z": "c216bda75a6807fc",
+        "name": "Value -> NIVEL",
+        "func": "function verificarNivelQualidadeTemperatura(temperatura) {\n  // Definir os limites de temperatura para cada nível de qualidade\n  const limites = {\n    1: [-20, 20],\n    2: [20, 30],\n    3: [30, 40],\n    4: [40, 50],\n    5: [50, Infinity],\n  };\n\n  // Obter o nível de qualidade da temperatura\n  for (const nivel in limites) {\n    if (temperatura >= limites[nivel][0] && temperatura <= limites[nivel][1]) {\n      return nivel;\n    }\n  }\n\n  // Se a temperatura não estiver dentro dos limites, retornar \"indefinido\"\n  return \"indefinido\";\n}\n\n\nmsg.nivel = verificarNivelQualidadeTemperatura(msg.payload.value);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 340,
+        "wires": [
+            [
+                "6bfe8db443080504"
+            ]
+        ]
+    },
+    {
+        "id": "91720703dd36fa2d",
+        "type": "change",
+        "z": "c216bda75a6807fc",
+        "g": "3cb202ecb9c9ade0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "userId",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5b5783bd4a6c0dc8",
+        "type": "ui_text_input",
+        "z": "c216bda75a6807fc",
+        "g": "3cb202ecb9c9ade0",
+        "name": "",
+        "label": "User ID",
+        "tooltip": "",
+        "group": "8404dab04e790276",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 260,
+        "y": 720,
+        "wires": [
+            [
+                "91720703dd36fa2d"
+            ]
+        ]
+    },
+    {
+        "id": "abdfbe4a18471951",
+        "type": "function",
+        "z": "c216bda75a6807fc",
+        "name": "BPM -> API",
+        "func": "msg.payload = {\n    \"usuario\": {\n        \"id\": msg.userId,\n    },\n    \"quantidade\": msg.payload.value,\n    \"dataAvaliacao\": msg.dataAvaliacao\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1290,
+        "y": 520,
+        "wires": [
+            [
+                "5ea88b3a0e5f6d2d"
+            ]
+        ]
+    },
+    {
+        "id": "dafdef2bad08c2a5",
+        "type": "change",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "userId",
+                "pt": "msg",
+                "to": "userId",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 890,
+        "y": 520,
+        "wires": [
+            [
+                "8b47a0e2b6544b73"
+            ]
+        ]
+    },
+    {
+        "id": "8b47a0e2b6544b73",
+        "type": "moment",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "date",
+        "inTz": "America/Sao_Paulo",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "YYYY-MM-DD",
+        "locale": "en-US",
+        "output": "dataAvaliacao",
+        "outputType": "msg",
+        "outTz": "America/Sao_Paulo",
+        "x": 1100,
+        "y": 520,
+        "wires": [
+            [
+                "abdfbe4a18471951"
+            ]
+        ]
+    },
+    {
+        "id": "5ea88b3a0e5f6d2d",
+        "type": "http request",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://climei.azurewebsites.net/api/v1/logBatimentoOxigenacao",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1460,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bf86d4eb244ae9a9",
+        "type": "function",
+        "z": "c216bda75a6807fc",
+        "name": "TEMPERATURA-> API",
+        "func": "msg.payload = {\n    \"usuario\": {\n        \"id\": msg.userId,\n    },\n    \"nivelTemperatura\":{\n        \"id\": msg.nivel,\n    },\n    \"temperatura\": msg.payload.value,\n    \"dataAvaliacao\": msg.dataAvaliacao\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1500,
+        "y": 340,
+        "wires": [
+            [
+                "71cf8e55c0e1b857"
+            ]
+        ]
+    },
+    {
+        "id": "6bfe8db443080504",
+        "type": "moment",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "date",
+        "inTz": "America/Sao_Paulo",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "YYYY-MM-DD",
+        "locale": "en-US",
+        "output": "dataAvaliacao",
+        "outputType": "msg",
+        "outTz": "America/Sao_Paulo",
+        "x": 1280,
+        "y": 340,
+        "wires": [
+            [
+                "bf86d4eb244ae9a9"
+            ]
+        ]
+    },
+    {
+        "id": "71cf8e55c0e1b857",
+        "type": "http request",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://climei.azurewebsites.net/api/v1/logTemperatura",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1700,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7d77741a32d222ff",
+        "type": "change",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "userId",
+                "pt": "msg",
+                "to": "userId",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 890,
+        "y": 340,
+        "wires": [
+            [
+                "fa5bdf9d64f06a5d"
+            ]
+        ]
+    },
+    {
+        "id": "8f3a143bfdbc2d27",
+        "type": "function",
+        "z": "c216bda75a6807fc",
+        "name": "Value -> NIVEL",
+        "func": "function verificarNivelQualidadeUmidade(umidade) {\n  // Definir os limites de umidade para cada nível de qualidade\n  const limites = {\n    1: [20, 60],\n    2: [60, 80],\n    3: [80, 90],\n    4: [90, 100],\n    5: [100, Infinity],\n  };\n\n  // Obter o nível de qualidade da umidade\n  for (const nivel in limites) {\n    if (umidade >= limites[nivel][0] && umidade <= limites[nivel][1]) {\n      return nivel;\n    }\n  }\n\n  // Se a umidade não estiver dentro dos limites, retornar \"indefinido\"\n  return \"indefinido\";\n}\n\n\nmsg.nivel = verificarNivelQualidadeUmidade(msg.payload.value);\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 420,
+        "wires": [
+            [
+                "b2bfa36363b4e5f3"
+            ]
+        ]
+    },
+    {
+        "id": "e0dbb99c519a7713",
+        "type": "function",
+        "z": "c216bda75a6807fc",
+        "name": "UMIDADE -> API",
+        "func": "msg.payload = {\n    \"usuario\": {\n        \"id\": msg.userId,\n    },\n    \"nivelUmidade\":{\n        \"id\": msg.nivel,\n    },\n    \"umidade\": msg.payload.value,\n    \"dataAvaliacao\": msg.dataAvaliacao\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1490,
+        "y": 420,
+        "wires": [
+            [
+                "1e02c0362ece1419"
+            ]
+        ]
+    },
+    {
+        "id": "b2bfa36363b4e5f3",
+        "type": "moment",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "topic": "",
+        "input": "",
+        "inputType": "date",
+        "inTz": "America/Sao_Paulo",
+        "adjAmount": 0,
+        "adjType": "days",
+        "adjDir": "add",
+        "format": "YYYY-MM-DD",
+        "locale": "en-US",
+        "output": "dataAvaliacao",
+        "outputType": "msg",
+        "outTz": "America/Sao_Paulo",
+        "x": 1280,
+        "y": 420,
+        "wires": [
+            [
+                "e0dbb99c519a7713"
+            ]
+        ]
+    },
+    {
+        "id": "1e02c0362ece1419",
+        "type": "http request",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://climei.azurewebsites.net/api/v1/logUmidade",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1680,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "326d74cdbe537c5c",
+        "type": "change",
+        "z": "c216bda75a6807fc",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "userId",
+                "pt": "msg",
+                "to": "userId",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 890,
+        "y": 420,
+        "wires": [
+            [
+                "8f3a143bfdbc2d27"
+            ]
+        ]
+    },
+    {
+        "id": "2168c626ac5e81f7",
+        "type": "mqtt-broker",
+        "name": "Conexao HIVEMQ",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "3f482cdd147cf361",
+        "type": "ui_group",
+        "name": "Temperatura & Umidade",
+        "tab": "31803d010cb02cdb",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8404dab04e790276",
+        "type": "ui_group",
+        "name": "Log",
+        "tab": "31803d010cb02cdb",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "31803d010cb02cdb",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "fa-refresh",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]
